@@ -1,61 +1,88 @@
-# Weather Detection App
+# WEATHER BLOCK
 
 ## Overview
 
-This is a web-based weather forecasting application that allows users to search for weather conditions by city name or automatically fetch their current location's weather. The app also integrates a real-time map using the MapTiler API to display the searched location.
+This project is a fully rebuilt weather dashboard focused on **same-day, near-live weather updates**.
+
+It supports:
+
+- Place search (city/location name)
+- Device geolocation (optional)
+- Near-real environmental metrics at selected coordinates
+- 7-day daily summary and recent hourly history
+- Interactive location map
+
+## Data Source
+
+Primary weather data is fetched from:
+
+- Open-Meteo Forecast API: https://open-meteo.com/
+
+Key datasets used:
+
+- Current conditions: temperature, apparent temperature, humidity, pressure, wind, dew point, precipitation
+- Hourly timeline: same-day/recent hourly weather metrics
+- Daily summary: max/min temperature, precipitation sum, humidity mean, wind max
+
+Location lookup is done with OpenStreetMap Nominatim:
+
+- Forward geocoding: place name -> latitude/longitude
+- Reverse geocoding: coordinates -> place label
+
+## Accuracy Notes
+
+- Live feeds are updated frequently, but exact refresh cadence depends on the upstream weather provider.
+- Data can still differ from hyper-local station sensors due to model/grid resolution.
 
 ## Features
 
-- Search weather by city name.
-- Automatically detect the user's location and fetch weather data.
-- Display temperature, humidity, wind speed, pressure, and UV index.
-- Interactive map displaying the selected location.
-- Smooth loading animations for better user experience.
-- Fully responsive design for different screen sizes.
+- Live/same-day weather metrics (temperature, humidity, wind, pressure, precipitation, dew point)
+- Computed "feels like" estimate for warm/humid conditions
+- Latest valid hourly observation in UTC
+- Latest 24 hourly records table
+- 7-day daily summary cards
+- Hyper-prism UI style (glass layers, gradient atmosphere, neon accents)
+- Skeleton loading states for metric fields, table rows, and map panel
+- Responsive desktop/mobile layout
+- Satellite map preview with place label overlay and marker
 
-## Technologies Used
-
-- **Frontend:** HTML, CSS, JavaScript
-- **APIs:**
-  - [Wttr.in API](https://wttr.in/) for weather data.
-- **Libraries:**
-  - [Leaflet.js](https://leafletjs.com/) for interactive maps.
-  - Google Fonts (Poppins) for typography.
-
-## Setup Instructions
-
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/your-username/weather-app.git
-   cd weather-app
-   ```
-2. Open `index.html` in a web browser.
-3. Ensure you have an active internet connection to fetch data from APIs.
-
-## Structure
+## Project Structure
 
 ```
-weather-app/
-│── index.html   # Main HTML structure
-│── style.css    # Styling and responsiveness
-│── script.js    # JavaScript logic for fetching data and handling UI
+weatherApp/
+|-- index.html
+|-- style.css
+|-- script.js
+|-- README.md
 ```
 
-## How It Works
+## Run Locally
 
-1. The app loads a map centered at a default location.
-2. Users can search for a city, and the app fetches weather data for that location.
-3. If geolocation is enabled, the app automatically gets the user's location and displays relevant weather data.
-4. The weather details and map update dynamically based on user input.
+No build step is required.
 
-## Future Enhancements
+1. Open `index.html` directly in a browser, or
+2. Use a lightweight local server (recommended):
 
-- Improve performance with API request optimizations.
-- Add more weather details like precipitation and visibility.
-- Implement a dark mode.
+```bash
+python3 -m http.server 8000
+```
 
-## Credits
+Then open `http://localhost:8000`.
 
-- **Weather Data:** Wttr.in API
-- **Icons & Styles:** Google Fonts, Leaflet.js
+## Usage
+
+1. Enter a city/place in the search field and click **Search**.
+2. Or click **Use My Location** and grant location permission.
+3. Read current metrics, daily summary, and hourly history.
+4. Use the map panel to confirm the exact coordinates being queried.
+
+## Stack
+
+- HTML5
+- Tailwind CSS (CDN)
+- CSS3
+- Vanilla JavaScript
+- Leaflet.js (map rendering)
+- Open-Meteo API (live weather)
+- Nominatim API (geocoding)
 
